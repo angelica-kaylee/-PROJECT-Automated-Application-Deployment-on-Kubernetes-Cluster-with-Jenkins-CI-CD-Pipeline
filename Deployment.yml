@@ -1,19 +1,19 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-   name: webapp
+   name: mrdevops
 spec:
    replicas: 2
    selector:      # tells the controller which pods to watch/belong to
     matchLabels:
-     app: webapp
+     app: mrdevops
    template:
       metadata:
         labels:
-          app: webapp
+          app: mrdevops
       spec:
        containers:
-        - name: webapp
+        - name: mrdevops
           image: angelicakaylee/jenkins_pipeline
           imagePullPolicy: Always
           ports:
