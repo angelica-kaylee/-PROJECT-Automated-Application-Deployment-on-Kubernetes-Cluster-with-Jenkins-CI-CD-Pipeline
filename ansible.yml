@@ -5,27 +5,32 @@
       shell: |
         eval $(minikube docker-env)
         echo "Minikube environment initialized."
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config  # Explicitly set the KUBECONFIG
 
     - name: Delete old deployment (if exists)
       shell: |
-        kubectl delete -f /home/ubuntu/Deployment.yml --ignore-not-found=true
+        minikube kubectl -- delete -f /home/ubuntu/Deployment.yml --ignore-not-found=true
       args:
         executable: /bin/bash
+      failed_when: false  # Ensure this task doesn't fail if no previous deployment is found
 
     - name: Delete old service (if exists)
       shell: |
-        kubectl delete -f /home/ubuntu/Service.yml --ignore-not-found=true
+        minikube kubectl -- delete -f /home/ubuntu/Service.yml --ignore-not-found=true
       args:
         executable: /bin/bash
+      failed_when: false  # Ensure this task doesn't fail if no previous service is found
 
     - name: Apply new deployment
       shell: |
-        kubectl apply -f /home/ubuntu/Deployment.yml
+        minikube kubectl -- apply -f /home/ubuntu/Deployment.yml
       args:
         executable: /bin/bash
 
     - name: Apply new service
       shell: |
-        kubectl apply -f /home/ubuntu/Service.yml
+        minikube kubectl -- apply -f /home/ubuntu/Service.yml
       args:
         executable: /bin/bash
+
