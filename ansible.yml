@@ -1,11 +1,19 @@
 - hosts: node
   become: true
   tasks:
-     - name: delete old deployment
-       command: kubectl delete -f /home/ubuntu/Deployment.yml
-     - name: delete old service
-       command: kubectl delete -f /home/ubuntu/Service.yml
-     - name: create new deployment
+     - name: Ensure Minikube environment is set
+       shell: |
+         eval $(minikube docker-env)
+         echo "Minikube environment initialized."
+
+     - name: Delete old deployment (if exists)
+       command: kubectl delete -f /home/ubuntu/Deployment.yml || true
+
+     - name: Delete old service (if exists)
+       command: kubectl delete -f /home/ubuntu/Service.yml || true
+
+     - name: Create new deployment
        command: kubectl apply -f /home/ubuntu/Deployment.yml
-     - name: create new service
+
+     - name: Create new service
        command: kubectl apply -f /home/ubuntu/Service.yml
