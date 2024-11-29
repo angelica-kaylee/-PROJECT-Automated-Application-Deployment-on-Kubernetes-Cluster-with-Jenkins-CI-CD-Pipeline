@@ -1,12 +1,12 @@
 - hosts: node
-  become: true
+  become: false  # Do not escalate to root
   tasks:
     - name: Ensure Minikube environment is set
       shell: |
         eval $(minikube docker-env)
         echo "Minikube environment initialized."
       environment:
-        KUBECONFIG: /home/ubuntu/.kube/config  # Explicitly set the KUBECONFIG
+        KUBECONFIG: /home/ubuntu/.kube/config
 
     - name: Delete old deployment (if exists)
       shell: |
@@ -33,4 +33,3 @@
         minikube kubectl -- apply -f /home/ubuntu/Service.yml
       args:
         executable: /bin/bash
-
