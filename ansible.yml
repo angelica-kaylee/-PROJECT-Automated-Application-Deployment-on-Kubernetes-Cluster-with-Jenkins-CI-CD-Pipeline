@@ -1,28 +1,11 @@
 - hosts: node
   become: true
   tasks:
-    - name: Delete old deployment
-      ansible.builtin.command:
-        cmd: >
-          KUBECONFIG=/home/ubuntu/.kube/config
-          kubectl delete -f /home/ubuntu/Deployment.yml
-      ignore_errors: yes
-
-    - name: Delete old service
-      ansible.builtin.command:
-        cmd: >
-          KUBECONFIG=/home/ubuntu/.kube/config
-          kubectl delete -f /home/ubuntu/Service.yml
-      ignore_errors: yes
-
-    - name: Apply new deployment
-      ansible.builtin.command:
-        cmd: >
-          KUBECONFIG=/home/ubuntu/.kube/config
-          kubectl apply -f /home/ubuntu/Deployment.yml
-
-    - name: Apply new service
-      ansible.builtin.command:
-        cmd: >
-          KUBECONFIG=/home/ubuntu/.kube/config
-          kubectl apply -f /home/ubuntu/Service.yml
+     - name: delete old deployment
+       command: kubectl delete -f /home/ubuntu/Deployment.yml
+     - name: delete old service
+       command: kubectl delete -f /home/ubuntu/Service.yml
+     - name: create new deployment
+       command: kubectl apply -f /home/ubuntu/Deployment.yml
+     - name: create new service
+       command: kubectl apply -f /home/ubuntu/Service.yml
