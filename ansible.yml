@@ -29,4 +29,3 @@
         kubectl apply -f /home/ubuntu/Service.yml
       args:
         executable: /bin/bash
-
