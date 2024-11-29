@@ -1,4 +1,4 @@
-- hosts: kubernetes
+- hosts: node
   become: true
   tasks:
     - name: Ensure Minikube environment is set
